@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtccjdnuifv6u"]
+
+[ext_resource type="Script" uid="uid://bcj7d5ftq41rc" path="res://scripts/ship_path_trace.gd" id="1_awr27"]
+
+[node name="ShipPathTrace" type="Line2D" node_paths=PackedStringArray("monitored_ship")]
+default_color = Color(0, 0, 0, 0.588235)
+script = ExtResource("1_awr27")
+monitored_ship = NodePath("")

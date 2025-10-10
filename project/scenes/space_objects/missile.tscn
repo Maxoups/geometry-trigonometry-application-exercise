@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://csk63qbcllicv"]
+
+[ext_resource type="Texture2D" uid="uid://bws73nhbyjla0" path="res://resources/SpaceShooterSprites/Missiles/spaceMissiles_013.png" id="1_pufbi"]
+[ext_resource type="Script" uid="uid://dpv423y31t6wh" path="res://scripts/missile.gd" id="2_6nuhk"]
+[ext_resource type="Texture2D" uid="uid://c3clt2b01bqdf" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_018.png" id="2_guahg"]
+[ext_resource type="PackedScene" uid="uid://b0jyyn03dfh8" path="res://scenes/space_objects/thruster_effect.tscn" id="2_xcv36"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xcv36"]
+radius = 30.2655
+
+[node name="Missile" type="Sprite2D"]
+texture = ExtResource("1_pufbi")
+script = ExtResource("2_6nuhk")
+
+[node name="ThrusterEffect" parent="." instance=ExtResource("2_xcv36")]
+position = Vector2(0, 8)
+rotation = 3.14159
+scale = Vector2(1, 0.75)
+is_active = true
+
+[node name="Sprite" parent="ThrusterEffect" index="0"]
+modulate = Color(1, 1, 0.427451, 1)
+texture = ExtResource("2_guahg")
+
+[node name="AnimationThruster" parent="ThrusterEffect/Sprite" index="0"]
+speed_scale = 1.2
+
+[node name="AreaCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaCollision"]
+shape = SubResource("CircleShape2D_xcv36")
+
+[connection signal="body_entered" from="AreaCollision" to="." method="_on_area_collision_body_entered"]
+
+[editable path="ThrusterEffect"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dr3q0tn2htik5"]
+
+[ext_resource type="Shader" uid="uid://dqf5bx8aala3w" path="res://resources/shaders/color_swap.gdshader" id="1_idq52"]
+[ext_resource type="Texture2D" uid="uid://cimyqv2mjnw4d" path="res://resources/GeometryGrid/point_sprite.png" id="2_dwkv2"]
+[ext_resource type="Script" uid="uid://bj3u0wsv6x5d4" path="res://scripts/point.gd" id="3_dwkv2"]
+[ext_resource type="Script" uid="uid://basqjwhkm26mf" path="res://scripts/toggleable_object.gd" id="4_a25lx"]
+[ext_resource type="LabelSettings" uid="uid://b4fgl8xw4ax78" path="res://resources/fonts/object_data_label_settings.tres" id="4_syp1l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71j4m"]
+resource_local_to_scene = true
+shader = ExtResource("1_idq52")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 0, 1, 1)
+
+[node name="Point" type="Sprite2D"]
+z_index = 1
+material = SubResource("ShaderMaterial_71j4m")
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_dwkv2")
+script = ExtResource("3_dwkv2")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_top = -0.094
+anchor_right = 0.133
+offset_left = 28.0
+offset_top = -99.968
+offset_right = 399.976
+offset_bottom = -24.0
+text = "A"
+label_settings = ExtResource("4_syp1l")
+
+[node name="ToggleableObject" type="Node" parent="Label"]
+script = ExtResource("4_a25lx")
+metadata/_custom_type_script = "uid://basqjwhkm26mf"

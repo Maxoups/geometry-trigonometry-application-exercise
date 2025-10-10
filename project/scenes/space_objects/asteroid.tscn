@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://pcmkgiuxl6hg"]
+
+[ext_resource type="Texture2D" uid="uid://crm4hvl7kfeba" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_001.png" id="1_b8xwe"]
+[ext_resource type="Script" uid="uid://tjl5grbjlosp" path="res://scripts/asteroid.gd" id="2_555rt"]
+[ext_resource type="Script" uid="uid://4jb67rgwcvk5" path="res://scripts/explodable_object.gd" id="3_tg3kj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_555rt"]
+radius = 208.753
+
+[node name="Asteroid" type="Sprite2D"]
+texture = ExtResource("1_b8xwe")
+script = ExtResource("2_555rt")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+script = ExtResource("3_tg3kj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+shape = SubResource("CircleShape2D_555rt")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.6, 0.439216, 0.333333, 1)
+
+[node name="PolygonInner1" type="Polygon2D" parent="."]
+color = Color(0.541176, 0.396078, 0.298039, 1)
+
+[node name="PolygonInner2" type="Polygon2D" parent="."]
+color = Color(0.462745, 0.337255, 0.25098, 1)
+polygon = PackedVector2Array(547.5, -57)
+uv = PackedVector2Array(547.5, -57)
+
+[node name="Line2D" type="Line2D" parent="."]
+closed = true
+width = 8.0
+default_color = Color(0.360784, 0.266667, 0.203922, 1)
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(8, -135)
+
+[connection signal="explosion" from="StaticBody2D" to="." method="explode"]

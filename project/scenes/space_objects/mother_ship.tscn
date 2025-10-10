@@ -1,0 +1,382 @@
+[gd_scene load_steps=18 format=3 uid="uid://bg4jokdf0h7pw"]
+
+[ext_resource type="PackedScene" uid="uid://cflvb7fjyk7nu" path="res://scenes/space_objects/ship.tscn" id="1_isupk"]
+[ext_resource type="Script" uid="uid://r0mp2sswbdk7" path="res://scripts/mother_ship.gd" id="2_683g5"]
+[ext_resource type="Texture2D" uid="uid://vysk2kpkqp6t" path="res://resources/SpaceShooterSprites/Ships/spaceShips_004.png" id="2_yn7v5"]
+[ext_resource type="Texture2D" uid="uid://dfluwachxur3n" path="res://resources/SpaceShooterSprites/Ships/spaceShips_005.png" id="3_683g5"]
+[ext_resource type="Texture2D" uid="uid://ddrn5nx3cgf24" path="res://resources/SpaceShooterSprites/Ships/spaceShips_008.png" id="4_x7olw"]
+[ext_resource type="Texture2D" uid="uid://cqdsjbuqvdixm" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_020.png" id="5_2bu30"]
+[ext_resource type="Texture2D" uid="uid://bwugleyy6hrye" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_022.png" id="6_k7uog"]
+[ext_resource type="Texture2D" uid="uid://c4uabifm06eih" path="res://resources/SpaceShooterSprites/Parts/spaceParts_044.png" id="7_sfd36"]
+[ext_resource type="Texture2D" uid="uid://cmpdbttt2ybxb" path="res://resources/SpaceShooterSprites/Parts/spaceParts_043.png" id="8_j88c7"]
+[ext_resource type="PackedScene" uid="uid://b0jyyn03dfh8" path="res://scenes/space_objects/thruster_effect.tscn" id="10_683g5"]
+
+[sub_resource type="Animation" id="Animation_x7olw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShipCannonCockpit:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 47)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipCannonCockpit:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_2bu30"]
+resource_name = "cannon_fire"
+length = 0.7
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShipCannonCockpit:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.7),
+"transitions": PackedFloat32Array(2.92817, 0.5, 0.5),
+"update": 0,
+"values": [Vector2(0, 47), Vector2(0, 27), Vector2(0, 47)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipCannonCockpit:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 0,
+"values": [-3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_683g5"]
+resource_name = "cannon_idle"
+length = 3.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShipCannonCockpit:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.5, 0.5),
+"update": 0,
+"values": [Vector2(0, 47), Vector2(0, 47)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipCannonCockpit:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.5, 0.5),
+"update": 0,
+"values": [-2.96706, -3.31613]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2bu30"]
+_data = {
+&"RESET": SubResource("Animation_x7olw"),
+&"cannon_fire": SubResource("Animation_2bu30"),
+&"cannon_idle": SubResource("Animation_683g5")
+}
+
+[sub_resource type="Animation" id="Animation_yn7v5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShipHull:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.59993, -69)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipHull:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShipHull/ShipHead:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.532652, -199.999)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShipHull/ShipThrusterMain:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.588289, 220.999)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShipHull/ShipThrusterRight:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(126.431, 161.664)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ShipHull/ShipThrusterLeft:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-126.568, 162.338)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ShipHull/ShipBack:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.369959, 138.999)]
+}
+
+[sub_resource type="Animation" id="Animation_isupk"]
+resource_name = "ship_idle"
+length = 4.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShipHull:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.466516),
+"update": 0,
+"values": [Vector2(-0.59993, -69)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipHull:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.466516, 0.34151),
+"update": 0,
+"values": [Vector2(1, 0.97), Vector2(0.97, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShipHull/ShipHead:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.466516, 0.406126),
+"update": 0,
+"values": [Vector2(-0.532652, -199.999), Vector2(-0.497151, -186.666)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShipHull/ShipThrusterMain:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.466516, 0.406126),
+"update": 0,
+"values": [Vector2(0.588289, 220.999), Vector2(0.559889, 210.333)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShipHull/ShipThrusterRight:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1, 3),
+"transitions": PackedFloat32Array(0.466516, 0.406126),
+"update": 0,
+"values": [Vector2(126.431, 161.664), Vector2(119.782, 168.348)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ShipHull/ShipThrusterLeft:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1, 3),
+"transitions": PackedFloat32Array(0.466516, 0.406126),
+"update": 0,
+"values": [Vector2(-126.568, 162.338), Vector2(-121.221, 167.657)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ShipHull/ShipBack:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.5, 2.5),
+"transitions": PackedFloat32Array(0.466, 0.406126),
+"update": 0,
+"values": [Vector2(0.369959, 138.999), Vector2(0.40901, 153.666)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yn7v5"]
+_data = {
+&"RESET": SubResource("Animation_yn7v5"),
+&"ship_idle": SubResource("Animation_isupk")
+}
+
+[node name="MotherShip" instance=ExtResource("1_isupk")]
+script = ExtResource("2_683g5")
+rotation_speed = 0.55
+ship_name = "MotherShip"
+
+[node name="Label" parent="." index="0"]
+offset_left = 210.667
+offset_top = -373.333
+offset_right = 964.667
+offset_bottom = -56.333
+text = "MotherShip:
+    position = (x=0.00, y=0.00)
+    rotation = 0.00
+    scale = (x=0.75, y=0.75)"
+
+[node name="ShipSprites" type="Node2D" parent="SpriteRoot" index="0"]
+
+[node name="ShipHull" type="Sprite2D" parent="SpriteRoot/ShipSprites" index="0"]
+z_index = 2
+position = Vector2(-0.59993, -69)
+rotation = -3.13893
+texture = ExtResource("3_683g5")
+
+[node name="ShipHead" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull" index="0"]
+z_index = 2
+position = Vector2(-0.532652, -199.999)
+rotation = 3.13893
+texture = ExtResource("2_yn7v5")
+
+[node name="FiringMarker2D" type="Marker2D" parent="SpriteRoot/ShipSprites/ShipHull/ShipHead" index="0"]
+position = Vector2(-0.00453401, 111.516)
+rotation = 3.14159
+gizmo_extents = 25.0
+
+[node name="ShipCannonCockpit" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull/ShipHead" index="1"]
+z_index = 2
+position = Vector2(0, 47)
+rotation = -3.14159
+texture = ExtResource("5_2bu30")
+offset = Vector2(0, -22)
+
+[node name="AnimationCannon" type="AnimationPlayer" parent="SpriteRoot/ShipSprites/ShipHull/ShipHead" index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_2bu30")
+}
+
+[node name="ShipBack" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull" index="1"]
+z_index = 2
+position = Vector2(0.369959, 138.999)
+rotation = -0.00266004
+texture = ExtResource("4_x7olw")
+
+[node name="ShipCannonHull" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull" index="2"]
+z_index = 2
+position = Vector2(0, 24.335)
+rotation = -0.00266701
+texture = ExtResource("6_k7uog")
+offset = Vector2(0, -25)
+
+[node name="ShipThrusterMain" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull" index="3"]
+position = Vector2(0.588289, 220.999)
+rotation = 3.13893
+texture = ExtResource("7_sfd36")
+
+[node name="ShipThrusterRight" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull" index="4"]
+z_index = -1
+position = Vector2(126.431, 161.664)
+rotation = 3.13893
+texture = ExtResource("8_j88c7")
+
+[node name="ThrusterEffect" parent="SpriteRoot/ShipSprites/ShipHull/ShipThrusterRight" index="0" instance=ExtResource("10_683g5")]
+position = Vector2(0.0739212, -50.1821)
+rotation = 0.00265813
+
+[node name="ShipThrusterLeft" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull" index="5"]
+z_index = -1
+position = Vector2(-126.568, 162.338)
+rotation = 3.13893
+texture = ExtResource("8_j88c7")
+
+[node name="ThrusterEffect" parent="SpriteRoot/ShipSprites/ShipHull/ShipThrusterLeft" index="0" instance=ExtResource("10_683g5")]
+position = Vector2(0, -50)
+
+[node name="AnimationShip" type="AnimationPlayer" parent="SpriteRoot/ShipSprites" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_yn7v5")
+}
+
+[node name="HullCannonAnimTimer" type="Timer" parent="SpriteRoot/ShipSprites" index="2"]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="SpriteRoot/ShipSprites/HullCannonAnimTimer" to="." method="play_hull_cannon_idle"]

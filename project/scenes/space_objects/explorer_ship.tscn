@@ -1,0 +1,174 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0ltusdhqx678"]
+
+[ext_resource type="PackedScene" uid="uid://cflvb7fjyk7nu" path="res://scenes/space_objects/ship.tscn" id="1_xmtrk"]
+[ext_resource type="Script" uid="uid://elg48w1eevby" path="res://scripts/explorer_ship.gd" id="2_gj4eo"]
+[ext_resource type="Texture2D" uid="uid://b3rx5kue6ebev" path="res://resources/SpaceShooterSprites/Ships/spaceShips_001.png" id="2_x5pj3"]
+[ext_resource type="PackedScene" uid="uid://b0jyyn03dfh8" path="res://scenes/space_objects/thruster_effect.tscn" id="4_gj4eo"]
+
+[sub_resource type="Animation" id="Animation_x5pj3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0349066]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.46, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_aiwn1"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.450625, 0.450625),
+"update": 0,
+"values": [Vector2(0, 2), Vector2(0, -2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.450625, 0.450625),
+"update": 0,
+"values": [0.0349066, -0.0349066]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.450625, 0.450625),
+"update": 0,
+"values": [Vector2(0.48, 0.5), Vector2(0.5, 0.48)]
+}
+
+[sub_resource type="Animation" id="Animation_gj4eo"]
+resource_name = "move"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.450625, 0.450625),
+"update": 0,
+"values": [Vector2(0, 5), Vector2(0, -5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.450625, 0.450625),
+"update": 0,
+"values": [0.0349066, -0.0349066]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.450625, 0.450625),
+"update": 0,
+"values": [Vector2(0.46, 0.5), Vector2(0.5, 0.46)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_42f54"]
+_data = {
+&"RESET": SubResource("Animation_x5pj3"),
+&"idle": SubResource("Animation_aiwn1"),
+&"move": SubResource("Animation_gj4eo")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x5pj3"]
+radius = 52.0171
+
+[node name="ExplorerShip" node_paths=PackedStringArray("path_points") instance=ExtResource("1_xmtrk")]
+script = ExtResource("2_gj4eo")
+speed = 300.0
+path_points = []
+
+[node name="Label" parent="." index="0"]
+offset_left = 33.0
+offset_top = -315.0
+offset_right = 787.0
+offset_bottom = 2.0
+
+[node name="SpriteRoot" parent="." index="1"]
+z_index = 15
+
+[node name="Sprite" type="Sprite2D" parent="SpriteRoot" index="0"]
+position = Vector2(0, 5)
+rotation = 0.0349066
+scale = Vector2(0.46, 0.5)
+texture = ExtResource("2_x5pj3")
+
+[node name="ThrusterEffect" parent="SpriteRoot/Sprite" index="0" instance=ExtResource("4_gj4eo")]
+position = Vector2(-0.921928, -100.698)
+scale = Vector2(2.2, 1.75)
+
+[node name="AnimationShip" type="AnimationPlayer" parent="SpriteRoot" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_42f54")
+}
+
+[node name="ShipHitboxArea" type="Area2D" parent="." index="2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShipHitboxArea" index="0"]
+shape = SubResource("CircleShape2D_x5pj3")
+
+[connection signal="body_entered" from="ShipHitboxArea" to="." method="_on_ship_hitbox_area_body_entered"]

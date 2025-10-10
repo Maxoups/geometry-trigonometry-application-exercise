@@ -1,0 +1,353 @@
+[gd_scene load_steps=30 format=3 uid="uid://bt4cdoblfhlft"]
+
+[ext_resource type="Shader" uid="uid://bdw0786jigflv" path="res://resources/shaders/grid_background.gdshader" id="1_nnsk1"]
+[ext_resource type="Script" uid="uid://biqixxvye3fr2" path="res://scripts/world.gd" id="1_xgqkh"]
+[ext_resource type="PackedScene" uid="uid://dr3q0tn2htik5" path="res://scenes/geometry/point.tscn" id="2_71j4m"]
+[ext_resource type="PackedScene" uid="uid://swoiph7kegbh" path="res://scenes/player_camera.tscn" id="2_oo54l"]
+[ext_resource type="PackedScene" uid="uid://pcmkgiuxl6hg" path="res://scenes/space_objects/asteroid.tscn" id="5_dss4m"]
+[ext_resource type="Texture2D" uid="uid://k5fyi4spnvfb" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_002.png" id="5_i7141"]
+[ext_resource type="Texture2D" uid="uid://gcu47ams1syf" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_003.png" id="6_4mrxx"]
+[ext_resource type="Texture2D" uid="uid://c80fq8cdd4mk7" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_004.png" id="7_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://cy7d5b1ckl2cj" path="res://scenes/space_objects/satellite.tscn" id="9_pm21f"]
+[ext_resource type="Texture2D" uid="uid://5sbo5wnny7lb" path="res://resources/SpaceShooterSprites/Station/spaceStation_019.png" id="11_xgqkh"]
+[ext_resource type="PackedScene" uid="uid://dtccjdnuifv6u" path="res://scenes/space_objects/ship_path_trace.tscn" id="17_7t5mc"]
+[ext_resource type="Script" uid="uid://basqjwhkm26mf" path="res://scripts/toggleable_object.gd" id="26_munwf"]
+[ext_resource type="Shader" uid="uid://dqf5bx8aala3w" path="res://resources/shaders/color_swap.gdshader" id="27_ts3gi"]
+[ext_resource type="Texture2D" uid="uid://c1gkupdtxvd5n" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_014.png" id="32_x28ej"]
+[ext_resource type="Texture2D" uid="uid://dft52r8fw4t1a" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_015.png" id="33_1jxku"]
+[ext_resource type="PackedScene" uid="uid://b0ltusdhqx678" path="res://scenes/space_objects/explorer_ship.tscn" id="41_rga7q"]
+[ext_resource type="PackedScene" uid="uid://bg4jokdf0h7pw" path="res://scenes/space_objects/mother_ship.tscn" id="42_6oujy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rwgxs"]
+shader = ExtResource("1_nnsk1")
+shader_parameter/scale = Vector2(0.01, 0.01)
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/background_color = Color(0.2, 0.2, 0.2, 0.2)
+shader_parameter/checkered_color = Color(0, 0, 0, 0.243137)
+shader_parameter/coarse_grid_color = Color(1, 1, 1, 0.690196)
+shader_parameter/coarse_grid_line_width = Vector2(0.05, 0.05)
+shader_parameter/fine_grid_color = Color(0.8, 0.8, 0.8, 0.839216)
+shader_parameter/fine_grid_subdivisions = 5.0
+shader_parameter/fine_grid_line_width = Vector2(0.03, 0.03)
+
+[sub_resource type="Animation" id="Animation_xgqkh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ctatt"]
+resource_name = "grid_idle"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1.93187, 0.353553),
+"update": 0,
+"values": [Color(1, 1, 1, 0.811765), Color(1, 1, 1, 0.415686)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_munwf"]
+_data = {
+&"RESET": SubResource("Animation_xgqkh"),
+&"grid_idle": SubResource("Animation_ctatt")
+}
+
+[sub_resource type="Shader" id="Shader_7t5mc"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 original: source_color;
+uniform vec4 replace: source_color;
+
+const float precision = 0.2;
+
+
+vec4 swap_color(vec4 color){
+	if (distance(color, original) <= precision){
+		return replace;
+	}
+	return color;
+}
+
+
+void fragment() {
+	COLOR = swap_color(texture(TEXTURE, UV));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfnet"]
+resource_local_to_scene = true
+shader = SubResource("Shader_7t5mc")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 0, 0.956863, 1)
+
+[sub_resource type="Shader" id="Shader_lakw3"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 original: source_color;
+uniform vec4 replace: source_color;
+
+const float precision = 0.2;
+
+
+vec4 swap_color(vec4 color){
+	if (distance(color, original) <= precision){
+		return replace;
+	}
+	return color;
+}
+
+
+void fragment() {
+	COLOR = swap_color(texture(TEXTURE, UV));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
+resource_local_to_scene = true
+shader = SubResource("Shader_lakw3")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(1, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0nbtd"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 1, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37qwj"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(1, 0, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_navra"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 0.623529, 0.623529, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_luhhm"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 0, 0, 1)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_xgqkh")
+
+[node name="Grid" type="ColorRect" parent="."]
+z_index = -5
+material = SubResource("ShaderMaterial_rwgxs")
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -5000.0
+offset_top = -5000.0
+offset_right = 5000.0
+offset_bottom = 5000.0
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Grid"]
+libraries = {
+&"": SubResource("AnimationLibrary_munwf")
+}
+
+[node name="ToggleableObject" type="Node" parent="Grid"]
+script = ExtResource("26_munwf")
+metadata/_custom_type_script = "uid://basqjwhkm26mf"
+
+[node name="Xaxis" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.619608)
+z_index = -5
+points = PackedVector2Array(-5000, 0, 5000, 0)
+width = 5.0
+
+[node name="Yaxis" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.619608)
+z_index = -5
+points = PackedVector2Array(0, -5000, 0, 5000)
+width = 5.0
+
+[node name="PlayerCamera" parent="." instance=ExtResource("2_oo54l")]
+position = Vector2(117, -170)
+
+[node name="Asteroid1" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(-394, 321)
+polygon_appear_delay = 0.75
+is_regular = false
+
+[node name="Asteroid2" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(-1046, -385)
+scale = Vector2(0.2891, 0.2891)
+texture = ExtResource("5_i7141")
+polygon_appear_delay = 0.25
+
+[node name="Asteroid6" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(-1252, 453)
+rotation = -1.11872
+scale = Vector2(1.08294, 1.08294)
+texture = ExtResource("5_i7141")
+
+[node name="Asteroid9" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(549, 787)
+rotation = -2.61437
+scale = Vector2(1.08294, 1.08294)
+texture = ExtResource("5_i7141")
+polygon_appear_delay = 1.5
+
+[node name="Asteroid7Target" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(618, -339)
+rotation = 0.795373
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("5_i7141")
+polygon_appear_delay = 1.5
+is_regular = false
+
+[node name="Asteroid8" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(1063, -737)
+rotation = -0.212242
+scale = Vector2(0.924741, 0.924741)
+texture = ExtResource("5_i7141")
+polygon_appear_delay = 1.75
+is_regular = false
+
+[node name="Asteroid3" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(-601, -608)
+scale = Vector2(0.817536, 0.817536)
+texture = ExtResource("5_i7141")
+polygon_appear_delay = 0.5
+
+[node name="Asteroid4" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(284, 207)
+scale = Vector2(0.589611, 0.589611)
+texture = ExtResource("6_4mrxx")
+polygon_appear_delay = 1.25
+is_regular = false
+
+[node name="Asteroid5" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(60, -655)
+scale = Vector2(0.6636, 0.6636)
+texture = ExtResource("7_7r4gi")
+polygon_appear_delay = 1.0
+
+[node name="Satellite" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
+position = Vector2(263, -421)
+scale = Vector2(0.288462, 0.288462)
+central_body = NodePath("../Asteroid5")
+orbit_duration = 7.0
+initial_delay = 1.5
+
+[node name="Satellite2" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
+position = Vector2(-748, -351)
+scale = Vector2(0.426282, 0.426282)
+texture = ExtResource("33_1jxku")
+central_body = NodePath("../Asteroid3")
+orbit_duration = 12.0
+
+[node name="Satellite5" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
+position = Vector2(293, 436)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("33_1jxku")
+central_body = NodePath("../Asteroid4")
+orbit_duration = 7.0
+orbit_radius = Vector2(370, 240)
+initial_delay = 2.0
+
+[node name="Satellite3" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
+position = Vector2(-803, 312)
+scale = Vector2(0.322607, 0.322607)
+texture = ExtResource("11_xgqkh")
+central_body = NodePath("../Asteroid1")
+orbit_duration = 10.0
+orbit_radius = Vector2(400, 600)
+orbit_speed = 10.0
+initial_delay = 0.5
+
+[node name="Satellite4" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
+position = Vector2(-184, -38)
+scale = Vector2(0.358763, 0.358763)
+texture = ExtResource("32_x28ej")
+central_body = NodePath("../Asteroid1")
+orbit_duration = 13.0
+initial_delay = 0.0
+
+[node name="ExplorerShip" parent="." node_paths=PackedStringArray("path_points") instance=ExtResource("41_rga7q")]
+position = Vector2(-1036, -62)
+path_points = [NodePath("../PointA"), NodePath("../PointB"), NodePath("../PointC"), NodePath("../PointD"), NodePath("../PointE"), NodePath("../PointF")]
+ship_name = "ExplorerShip"
+
+[node name="MotherShip" parent="." node_paths=PackedStringArray("target") instance=ExtResource("42_6oujy")]
+position = Vector2(1022, 457)
+target = NodePath("../Asteroid7Target")
+
+[node name="Label" parent="MotherShip" index="0"]
+offset_left = 252.0
+offset_top = -568.0
+offset_right = 1006.0
+offset_bottom = -251.0
+text = "MotherShip:
+    position = (x=1022.00, y=457.00)
+    rotation = 64.08
+    scale = (x=0.75, y=0.75)"
+
+[node name="SpriteRoot" parent="MotherShip" index="1"]
+position = Vector2(90.6667, -18.6667)
+rotation = 1.11834
+
+[node name="PointA" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_qfnet")
+position = Vector2(-720, 98)
+point_color = Color(0, 0, 0.956863, 1)
+
+[node name="PointB" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_k0juu")
+position = Vector2(-298, -140)
+point_name = "B"
+point_color = Color(1, 0, 0, 1)
+
+[node name="PointC" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_0nbtd")
+position = Vector2(175, -89)
+point_name = "C"
+point_color = Color(0, 1, 0, 1)
+
+[node name="PointD" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_37qwj")
+position = Vector2(471, -421)
+point_name = "D"
+point_color = Color(1, 0, 1, 1)
+
+[node name="PointE" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_navra")
+position = Vector2(914, -338)
+point_name = "E"
+point_color = Color(0, 0.623529, 0.623529, 1)
+
+[node name="PointF" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_luhhm")
+position = Vector2(834, 362)
+point_name = "F"
+point_color = Color(0, 0, 0, 1)
+
+[node name="ShipPathTrace" parent="." node_paths=PackedStringArray("monitored_ship") instance=ExtResource("17_7t5mc")]
+points = PackedVector2Array(0, 0, 0, 0)
+monitored_ship = NodePath("../ExplorerShip")
+
+[editable path="MotherShip"]

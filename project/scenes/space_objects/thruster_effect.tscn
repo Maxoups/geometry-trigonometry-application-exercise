@@ -1,0 +1,148 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0jyyn03dfh8"]
+
+[ext_resource type="Texture2D" uid="uid://ckedr58151cpb" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_001.png" id="1_qkp7g"]
+[ext_resource type="Script" uid="uid://comjmnstq66x3" path="res://scripts/thruster_effect.gd" id="2_fx8j2"]
+
+[sub_resource type="Animation" id="Animation_elsnp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ThrusterEffect/Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ThrusterEffect/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ThrusterEffect/Sprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ThrusterEffect/Sprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2.21732, 2.37782)]
+}
+
+[sub_resource type="Animation" id="Animation_aiwn1"]
+resource_name = "hidden"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ThrusterEffect/Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_gj4eo"]
+resource_name = "move"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ThrusterEffect/Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ThrusterEffect/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.554785, 0.554785),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, 5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ThrusterEffect/Sprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(0.554785, 0.554785, 0.554785, 0.554785),
+"update": 0,
+"values": [-0.0698132, 0.0698132, -0.0698132, 0.0698132]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ThrusterEffect/Sprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(0.554785, 0.554785, 0.554785, 0.554785),
+"update": 0,
+"values": [Vector2(2.5, 2.5), Vector2(2.2, 3.25), Vector2(2.5, 2.5), Vector2(2.2, 3.25)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_42f54"]
+_data = {
+&"RESET": SubResource("Animation_elsnp"),
+&"hidden": SubResource("Animation_aiwn1"),
+&"move": SubResource("Animation_gj4eo")
+}
+
+[node name="ThrusterEffect" type="Node2D"]
+script = ExtResource("2_fx8j2")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(2.21732, 2.37782)
+texture = ExtResource("1_qkp7g")
+offset = Vector2(0, -20)
+
+[node name="AnimationThruster" type="AnimationPlayer" parent="Sprite"]
+root_node = NodePath("../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_42f54")
+}

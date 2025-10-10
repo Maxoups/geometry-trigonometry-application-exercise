@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy7d5b1ckl2cj"]
+
+[ext_resource type="Texture2D" uid="uid://cah3k41u01bfv" path="res://resources/SpaceShooterSprites/Station/spaceStation_018.png" id="1_scsqi"]
+[ext_resource type="Script" uid="uid://c73dt18lpdln1" path="res://scripts/satellite.gd" id="2_3xobd"]
+
+[node name="Satellite" type="Sprite2D"]
+scale = Vector2(0.519231, 0.519231)
+texture = ExtResource("1_scsqi")
+script = ExtResource("2_3xobd")

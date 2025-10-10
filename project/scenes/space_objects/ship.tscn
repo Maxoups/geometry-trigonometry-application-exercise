@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cflvb7fjyk7nu"]
+
+[ext_resource type="Script" uid="uid://c8gol1c1q2su1" path="res://scripts/ship.gd" id="1_cptpr"]
+[ext_resource type="LabelSettings" uid="uid://b4fgl8xw4ax78" path="res://resources/fonts/object_data_label_settings.tres" id="2_4d3q3"]
+[ext_resource type="Script" uid="uid://basqjwhkm26mf" path="res://scripts/toggleable_object.gd" id="2_say45"]
+
+[node name="Ship" type="Node2D"]
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_cptpr")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_top = -0.094
+anchor_right = 0.133
+offset_left = 105.333
+offset_top = -330.667
+offset_right = 859.333
+offset_bottom = -13.6667
+text = "Ship:
+    position = (x=0.00, y=0.00)
+    rotation = 0.00
+    scale = (x=0.75, y=0.75)"
+label_settings = ExtResource("2_4d3q3")
+
+[node name="ToggleableObject" type="Node" parent="Label"]
+script = ExtResource("2_say45")
+metadata/_custom_type_script = "uid://basqjwhkm26mf"
+
+[node name="SpriteRoot" type="Node2D" parent="."]

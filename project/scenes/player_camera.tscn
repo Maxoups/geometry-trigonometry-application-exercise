@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://swoiph7kegbh"]
+
+[ext_resource type="Script" uid="uid://rtfeos2py3mr" path="res://scripts/player_camera.gd" id="1_7pa0d"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7pa0d"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_eanys"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_tparg"]
+font_size = 18
+
+[node name="PlayerCamera" type="Camera2D"]
+zoom = Vector2(0.35, 0.35)
+script = ExtResource("1_7pa0d")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LabelMousePosition" type="Label" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "(x=0.0, y=0.0)"
+label_settings = SubResource("LabelSettings_7pa0d")
+horizontal_alignment = 2
+
+[node name="LabelExercise" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_right = 0.261285
+anchor_bottom = 0.195988
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_eanys")
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/LabelExercise"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.509804)
+
+[node name="ExerciseContent" type="Label" parent="CanvasLayer/LabelExercise"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_tparg")
+autowrap_mode = 2

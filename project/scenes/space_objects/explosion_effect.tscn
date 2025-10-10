@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://dn66pfvu76mge"]
+
+[ext_resource type="Texture2D" uid="uid://du22dgrd8iqqk" path="res://resources/SpaceShooterSprites/Explosion/explosionSmoke1.png" id="1_5roah"]
+[ext_resource type="Texture2D" uid="uid://48d6qaw8j0g2" path="res://resources/SpaceShooterSprites/Explosion/explosionSmoke2.png" id="2_28ced"]
+[ext_resource type="Texture2D" uid="uid://d0tqv32aympfj" path="res://resources/SpaceShooterSprites/Explosion/explosionSmoke3.png" id="3_xrx4g"]
+[ext_resource type="Texture2D" uid="uid://dftcccr35cdb" path="res://resources/SpaceShooterSprites/Explosion/explosionSmoke4.png" id="4_nfmj7"]
+[ext_resource type="Texture2D" uid="uid://bn52euqcgnvif" path="res://resources/SpaceShooterSprites/Explosion/explosionSmoke5.png" id="5_ey372"]
+[ext_resource type="Script" uid="uid://b4vx7uprsmwhp" path="res://scripts/explosion_effect.gd" id="6_rjui0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7rd14"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5roah")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_28ced")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xrx4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nfmj7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ey372")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="ExplosionEffect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_7rd14")
+script = ExtResource("6_rjui0")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://btlhatvdefglc"]
+
+[ext_resource type="Script" uid="uid://rtrcnwo68l8n" path="res://scripts/asteroid_fragment.gd" id="1_roa45"]
+
+[node name="AsteroidFragment" type="Polygon2D"]
+z_index = 1
+color = Color(0.6, 0.439216, 0.333333, 1)
+script = ExtResource("1_roa45")
+
+[node name="PolygonInner1" type="Polygon2D" parent="."]
+color = Color(0.541176, 0.396078, 0.298039, 1)
+
+[node name="PolygonInner2" type="Polygon2D" parent="."]
+color = Color(0.462015, 0.335487, 0.252227, 1)
+polygon = PackedVector2Array(363.5, -31)
+uv = PackedVector2Array(363.5, -31)
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = -1
+closed = true
+width = 8.0
+default_color = Color(0.360784, 0.266667, 0.203922, 1)
