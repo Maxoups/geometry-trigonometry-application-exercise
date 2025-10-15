@@ -44,10 +44,17 @@ func _process(delta: float) -> void:
 	if not is_moving:
 		return
 	current_time += delta
-	var new_pos := GP1_TD.lerp_object_position(starting_position, final_position, 
-											speed, current_time)
+	var new_pos : Vector2
+	if Global.chosen_code == Global.Languages.TD_GDScript:
+		new_pos = GP1_TD.lerp_object_position(starting_position, final_position, speed, current_time)
+	elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+		new_pos = GP1_TD_CS.LerpObjectPosition(starting_position, final_position, speed, current_time)
 	position = new_pos
-	$SpriteRoot.rotation = GP1_TD.lerp_object_rotation($SpriteRoot.rotation+PI/2.0, 
+	if Global.chosen_code == Global.Languages.TD_GDScript:
+		$SpriteRoot.rotation = GP1_TD.lerp_object_rotation($SpriteRoot.rotation+PI/2.0, 
+							global_position, final_position)-PI/2.0
+	elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+		$SpriteRoot.rotation = GP1_TD_CS.LerpObjectRotation($SpriteRoot.rotation+PI/2.0, 
 							global_position, final_position)-PI/2.0
 	if global_position.distance_squared_to(final_position) <= SNAP_LIMIT:
 		set_current_point(current_point + 1)

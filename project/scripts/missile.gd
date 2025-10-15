@@ -20,7 +20,10 @@ static func spawn_missile(position : Vector2, rotation : float, new_target_pos :
 
 
 func _process(delta: float) -> void:
-	velocity = GP1_TD.get_velocity(global_position, target_position, speed, delta, velocity)
+	if Global.chosen_code == Global.Languages.TD_GDScript:
+		velocity = GP1_TD.get_velocity(global_position, target_position, speed, delta, velocity)
+	elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+		velocity = GP1_TD_CS.GetVelocity(global_position, target_position, speed, delta, velocity)
 	global_position += velocity
 
 func explode() -> void:

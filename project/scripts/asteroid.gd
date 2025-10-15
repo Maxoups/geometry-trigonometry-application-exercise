@@ -28,14 +28,25 @@ func explode(impact_point : Vector2, explosion_force : float) -> void:
 	if len($Polygon2D.polygon) == 0:
 		print_debug("Polygon has not been drawn ; can't explode asteroid!")
 		return
-	var fragments := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
+	var fragments : Array
+	if Global.chosen_code == Global.Languages.TD_GDScript:
+		fragments = GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
+	elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+		fragments = GP1_TD_CS.ShatterPolygon($Polygon2D.polygon, randi_range(8, 14))
+	
 	for fragment : PackedVector2Array in fragments:
+		var fragment_velocity : Vector2
+		if Global.chosen_code == Global.Languages.TD_GDScript:
+			fragment_velocity = GP1_TD.explode_fragment($Polygon2D.polygon, global_position, fragment, 
+										impact_point, explosion_force)
+		elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+			fragment_velocity = GP1_TD_CS.ExplodeFragment($Polygon2D.polygon, global_position, fragment, 
+										impact_point, explosion_force)
 		AsteroidFragment.spawn_asteroid_fragment(
 			global_position, 
 			global_rotation, 
 			fragment, 
-			GP1_TD.explode_fragment($Polygon2D.polygon, global_position, fragment, 
-									impact_point, explosion_force),
+			fragment_velocity,
 			polygon_intersection(fragment, $PolygonInner1.polygon),
 			polygon_intersection(fragment, $PolygonInner2.polygon)
 		)
@@ -56,14 +67,25 @@ func generate_asteroid_polygon() -> void:
 func _draw_all_regular_polygons() -> void:
 	for i : int in range(len(polygons)):
 		var p := polygons[i]
-		p.polygon = GP1_TD.generate_regular_polygon(
+		if Global.chosen_code == Global.Languages.TD_GDScript:
+			p.polygon = GP1_TD.generate_regular_polygon(
+							scale.x * ASTEROID_RADIUS[i], 
+							randi_range(6, 12))
+		elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+			p.polygon = GP1_TD_CS.GenerateRegularPolygon(
 							scale.x * ASTEROID_RADIUS[i], 
 							randi_range(6, 12))
 
 func _draw_all_random_polygons() -> void:
 	for i : int in range(len(polygons)):
 		var p := polygons[i]
-		p.polygon = GP1_TD.generate_random_polygon(
+		if Global.chosen_code == Global.Languages.TD_GDScript:
+			p.polygon = GP1_TD.generate_random_polygon(
+							scale.x * ASTEROID_RADIUS[i], 
+							scale.x * ASTEROID_RADIUS[i+1], 
+							randi_range(6, 12))
+		elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+			p.polygon = GP1_TD_CS.GenerateRandomPolygon(
 							scale.x * ASTEROID_RADIUS[i], 
 							scale.x * ASTEROID_RADIUS[i+1], 
 							randi_range(6, 12))

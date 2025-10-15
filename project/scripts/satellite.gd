@@ -21,8 +21,11 @@ func _ready() -> void:
 	Global.world.start_satellite_orbits.connect(start_satellite_orbits)
 
 func start_satellite_orbits() -> void:
-	var orbit_parameters := GP1_TD.get_satellite_orbit_parameters(
-							orbit_center, orbit_duration, starting_position)
+	var orbit_parameters : Dictionary[String, float]
+	if Global.chosen_code == Global.Languages.TD_GDScript:
+		orbit_parameters = GP1_TD.get_satellite_orbit_parameters(orbit_center, orbit_duration, starting_position)
+	elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+		orbit_parameters = GP1_TD_CS.GetSatelliteOrbitParameters(orbit_center, orbit_duration, starting_position)
 	if orbit_radius == Vector2.ZERO:
 		orbit_radius = Vector2.ONE * orbit_parameters["radius"]
 	orbit_speed = orbit_parameters["speed"]
@@ -39,7 +42,12 @@ func _process(delta: float) -> void:
 	compute_satellite_transform()
 
 func compute_satellite_transform() -> void:
-	var t : Transform2D = GP1_TD.get_satellite_orbit_transform(orbit_center, starting_angle, 
+	var t : Transform2D
+	if Global.chosen_code == Global.Languages.TD_GDScript:
+		t = GP1_TD.get_satellite_orbit_transform(orbit_center, starting_angle, 
+									orbit_radius, orbit_duration, current_time)
+	elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+		t = GP1_TD_CS.GetSatelliteOrbitTransform(orbit_center, starting_angle, 
 									orbit_radius, orbit_duration, current_time)
 	rotation = t.get_rotation()
 	position = t.get_origin()

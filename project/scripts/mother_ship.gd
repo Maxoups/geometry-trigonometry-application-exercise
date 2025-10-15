@@ -26,7 +26,13 @@ func _ready() -> void:
 
 
 func rotate_ship() -> void:
-	var new_rotation := GP1_TD.get_angle_to(global_position, target.global_position) + 3.0*PI/2.0
+	var new_rotation : float 
+	if Global.chosen_code == Global.Languages.TD_GDScript:
+		new_rotation = GP1_TD.get_angle_to(global_position, target.global_position) + 3.0*PI/2.0
+	elif Global.chosen_code == Global.Languages.TD_C_Sharp:
+		new_rotation = GP1_TD_CS.GetAngleTo(global_position, target.global_position) + 3.0*PI/2.0
+	
+	
 	var t := create_tween().set_trans(Tween.TRANS_SINE)
 	var angle_difference : float = $SpriteRoot.rotation-new_rotation
 	var used_thruster : ThrusterEffect
